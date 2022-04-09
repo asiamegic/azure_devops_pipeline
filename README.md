@@ -26,3 +26,14 @@ It describes steps such as:
 <br><b> This project is a continuation of the previous project ANSIBL AND TERRAFORM, you can find them at the link </b>
 
 https://github.com/asiamegic/ansible_with_terraform
+
+<hr>
+<b> CI - continuous integration </b>
+
+![ci](https://user-images.githubusercontent.com/85096533/162591323-aae12ce8-7427-4524-a1ce-4431e4960b4f.jpg)
+<hr>
+
+
+<br><b>CD - continuous deployment</b>
+![cd](https://user-images.githubusercontent.com/85096533/162591343-a2348b51-5a1c-4302-9d65-34a11e180ec0.jpg)
+
