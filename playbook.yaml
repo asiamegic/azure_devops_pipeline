@@ -1,0 +1,71 @@
+      - name: "pm2 delete all"
+                shell: pm2 delete all
+                args:
+                  chdir: '{{ home_dir }}'
+
+      - name: "delete dir"
+        file:
+          state: absent
+          path: '{{ home_dir }}'
+
+      - name: "make direcoty"
+        file:
+          state: directory
+          path: '{{ home_dir }}'
+
+      - name: copy artifact file
+          src: '{{ artifact_path }}'
+          dest: '{{ home_dir }}'
+
+      - name: create env config
+      copy:
+        dest: '{{ home_dir }}.env'
+        content: |
+
+          PORT={{ app_port }}
+          HOST=0.0.0.0
+
+          HOST_URL=http://{{ host_ip_public }}:{{ app_port }}
+          COOKIE_ENCRYPT_PWD=superAwesomePasswordStringThatIsAtLeast32CharactersLong!
+          NODE_ENV=development
+
+          PGHOST={{ bd_host }}
+          PGUSERNAME={{ bd_username }}
+          PGDATABASE={{ bd_name }}
+          PGPASSWORD={{ bd_pass }}
+          PGPORT=5432
+
+          # Okta configuration
+          OKTA_ORG_URL={{ okta_rul }}
+          OKTA_CLIENT_ID={{ okta_id }}
+          OKTA_CLIENT_SECRET={{ okta_secret }}
+
+        - name: postgres init
+            shell: npm run initdb
+            async: 30
+            poll: 0
+            args:
+              chdir: '{{ home_dir }}'
+
+
+
+      - name: pm2 start
+        shell: pm2 start npm -- run dev
+        args:
+          chdir: '{{ home_dir }}'
+        register: start_finished
+
+      - name: pm2 save
+        shell: pm2 save
+        args:
+          chdir: '{{ home_dir }}'
+        when: start_finished.changed
+        register: save_finished
+
+      - name: pm2 startup
+        shell: pm2 startup
+        args:
+          chdir: '{{ home_dir }}'
+        when: save_finished.changed
+
+

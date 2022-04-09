@@ -1,0 +1,35 @@
+trigger:
+  branches:
+    include:
+    - master
+stages:
+- stage: __default
+  jobs:
+  - job: Job
+    pool:
+      name: 'my-pool'
+    steps:
+    - task: NodeTool@0
+      inputs:
+        versionSpec: '14.x'
+      displayName: 'Install Node.js'
+    - task: Npm@1
+      inputs:
+        command: 'install'
+        workingDir: '$(Build.SourcesDirectory)'
+    - task: CopyFiles@2
+      inputs:
+        SourceFolder: '$(Build.SourcesDirectory)'
+        Contents: '*.zip*'
+        TargetFolder: '$(build.artifactstagingdirectory)'
+      displayName: 'Artifacts'
+    - task: UniversalPackages@0
+      displayName: Upload artifacts to azure artifacts
+      inputs:
+        command: 'publish'
+        publishDirectory: '$(Build.ArtifactStagingDirectory)'
+        feedsToUsePublish: 'internal'
+        vstsFeedPublish: 'azuredev1/app'
+        vstsFeedPackagePublish: 'app-artifact'
+        versionOption: 'patch'
+
