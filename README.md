@@ -12,7 +12,7 @@
  ![project-cicd](https://user-images.githubusercontent.com/85096533/162590747-601d8fb8-86f4-4f2c-ac4a-9b54379950cb.png)
 
 This repository contains two files: <br>
-<b> app_ci_pipeline.yml </b> - allows you to easily deploy the SIAY part of the project by simply importing it into azure devops, this stage allows you to carry out integration tests.
+<b> app_ci_pipeline.yml </b> - allows you to easily deploy the CI part of the project by simply importing it into azure devops, this stage allows you to carry out integration tests.
 
 It describes steps such as:
 * Installing node js on the host.
