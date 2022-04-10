@@ -21,6 +21,19 @@ It describes steps such as:
 * Pushing files to artifact repository on azure devopss server
 
 <b> playbook.yaml </b> - contains an ansible script that will allow you to conduct continuous si stages after setting up this part
+<hr>
+
+<b>A set of commands necessary to install and configure the AZURE DEVOPS agent that you need to run on the host: </b>
+* sudo apt update
+* echo yes|sudo apt install zip
+* echo Y|sudo apt install ansible
+* sudo apt install sshpass
+* mkdir myagent && cd myagent
+* wget https://vstsagentpackage.azureedge.net/agent/2.202.0/vsts-agent-linux-x64-2.202.0.tar.gz
+* tar zxvf vsts-agent-linux-x64-2.202.0.tar.gz
+
+* ./config.sh     <b> -before you start, you need to complete configurations, such as link an account, enter the PAT key, enter the name of the agent pool, enter the name of your agent and the name of the working folder on the local machine </b>
+* ./run.sh        <b> -starts the agent itself after all the settings</b>
 
 <hr>
 <br><b> This project is a continuation of the previous project ANSIBL AND TERRAFORM, you can find them at the link </b>
